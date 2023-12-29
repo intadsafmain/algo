@@ -1,12 +1,13 @@
-#include <SDL_ttf.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <SDL.h>
+#include <SDL2/SDL.h>
+
 typedef struct list{
     int val ;
     struct list *next ; 
 }* list ;
-void creatrec(SDL_Renderer *ren,int x,int taille){
+
+void creatrec(SDL_Renderer *ren, int x, int taille){
     SDL_Rect recta;
     recta.x=(800/taille)*x;
     recta.y=5;
@@ -15,18 +16,23 @@ void creatrec(SDL_Renderer *ren,int x,int taille){
     SDL_RenderDrawLine(ren,(800/taille)-50,300,(800/taille),300);
     SDL_RenderFillRect(ren,&recta);
 }
+
 int main(int arc, char** argv){
     int a;
     int f;
     SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window *windo=NULL;
+    SDL_Window  *windo=NULL;
     SDL_Renderer *rend=NULL;
     
-	windo=SDL_CreateWindow("ta3i",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600,0);  
-    rend=SDL_CreateRenderer(windo,-1,SDL_RENDERER_SOFTWARE);
     
     printf("taille ya wld");
     scanf("%d",&a);
+
+	windo = SDL_CreateWindow("ta3i",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600,0);
+    rend  = SDL_CreateRenderer(windo,-1,SDL_RENDERER_SOFTWARE);
+    
+    SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+
     f=a;
     while (f!=0)
     {
@@ -56,9 +62,9 @@ int main(int arc, char** argv){
     rec.y=(600-rec.h)/2;
     SDL_RenderCopy(rend,text,NULL,&rec);
     
-
-    SDL_RenderPresent(rend);*/
-    SDL_Delay(600000);
+    */
+    SDL_RenderPresent(rend);
+    SDL_Delay(6000);
     SDL_DestroyWindow(windo);
     SDL_Quit();
     return EXIT_SUCCESS;
