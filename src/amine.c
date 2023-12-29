@@ -1,3 +1,4 @@
+#include <SDL2/SDL_events.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -64,7 +65,19 @@ int main(int arc, char** argv){
     
     */
     SDL_RenderPresent(rend);
-    SDL_Delay(6000);
+
+    bool loop = true;
+    SDL_Event e;
+    while(loop){
+        if(SDL_WaitEvent(&e)){
+            switch (e.type){
+            SDL_QUIT:
+                loop = false;
+                break;
+            }
+        }
+    }
+
     SDL_DestroyWindow(windo);
     SDL_Quit();
     return EXIT_SUCCESS;
