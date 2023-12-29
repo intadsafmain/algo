@@ -9,14 +9,15 @@ typedef struct list{
 
 void creatrec(SDL_Renderer *ren, int x, int taille){
     SDL_Rect recta;
-    int r;
-    r=250/taille;
-    recta.x=((800/taille)*x)+50;
+    int r,i;
+    r=(800/taille);
+    i=(50/taille);
+    recta.x=(r*x)+i;
     recta.y=200;
-    recta.w=(800/taille)-r-50;
+    recta.w=r-(r/3);
     recta.h=100;
-    if(x!=taille){
-    SDL_RenderDrawLine(ren,(((800/taille)-r-50)*x)+50,250,((800/taille)*x)+50,250);}
+    if(x!=taille-1){
+    SDL_RenderDrawLine(ren,r-(r/3)+(r*x)+i,250,r+(r*x)+i,250);}
     SDL_RenderFillRect(ren,&recta);
 }
 
@@ -67,7 +68,7 @@ int main(int arc, char** argv){
     
     */
     SDL_RenderPresent(rend);
-    SDL_Delay(8000);
+    SDL_Delay(9000);
     SDL_DestroyWindow(windo);
     SDL_Quit();
     return EXIT_SUCCESS;
