@@ -9,6 +9,8 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
 #include "sort_screen.h"
 
 #define DEF_WIN_W 800 

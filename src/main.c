@@ -1,5 +1,4 @@
 #include "def.h"
-#include "sort_screen.h"
 
 window wind;
 renderer rend;
@@ -15,6 +14,7 @@ int main(int argc, char** argv){
         printf("ereur creation fenetre: %s", SDL_GetError());
         goto quit;
     }
+    SDL_SetWindowMinimumSize(wind, DEF_WIN_W, DEF_WIN_H);
     
     if ( (rend = CREATE_REND) == NULL){
         printf("ereur creation rendu: %s", SDL_GetError());

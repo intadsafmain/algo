@@ -2,6 +2,8 @@
 #define __SORT_SCREEN__
 
 #include "def.h"
+#include <SDL2/SDL_timer.h>
+#include <stdio.h>
 
 extern window   wind;
 extern renderer rend;
@@ -15,7 +17,7 @@ int main_Loop(){
     SDL_Event e;
     SDL_Rect start_bout;
     bool left_hold = false;
-    
+
 
     //mes enrengistrements a oim UwU
     pos mouse_pos, diff;
@@ -24,27 +26,29 @@ int main_Loop(){
     tete = (element)malloc(sizeof(element));
     tete->next = (element)malloc(sizeof(element));
     tete->next->next = NULL;
-
+    element p;
     int i = 0;
 
     // les coordinations constante avant la boucle
-    
-    for(element p = tete; p!=NULL; p = p->next){
-       init_rect( &p->rectangle, 50 + 150*i, 50, 100, 50);
-       if(p->next != NULL){
+
+    for( p = tete; p!=NULL; p = p->next){
+        init_rect( &p->rectangle, 50 + 150*i, 50, 100, 50);
+    printf("%p\n",p);
+        if(p->next != NULL){
             p->queue.x = 50 + 150*(i+1);
             p->queue.y = 75;
-        }   
+        }
+
     }    
 
-
+    puts("c bon la queue et les positions teh les rectangles");
 
     while(loop){
         SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
         SDL_RenderClear(rend);
 
         SDL_GetWindowSize(wind, &window_dim.w, &window_dim.h);
-        
+
         /*
          *  animation rendering: tout ce qui se modifie par rapport a l'environemnt genre la taille de la fenetre qui géchan
          *  qui n'a rien a voir avec les interactions mais qui fait une animation quand meme (genre euh le triage)
@@ -60,47 +64,58 @@ int main_Loop(){
         */
 
 
-        
+
         //interaction / interaction rendering: tout ce qui est
         //rendering par rapport a l'input
         if(SDL_WaitEvent(&e)){
             switch (e.type) {
-            case SDL_QUIT:
-                loop = false;
-                break;
-            
-            case SDL_MOUSEBUTTONDOWN:
-                if
-                (e.button.button == SDL_BUTTON_LEFT /*&&
-                        e.button.x >= rect.x && e.button.x <= rect.x+rect.w &&
-                        e.button.y >= rect.y && e.button.y <= rect.y+rect.h*/){
+                case SDL_QUIT:
+                    loop = false;
+                    break;
+
+                case SDL_MOUSEBUTTONDOWN: 
+                    /*
+                    if (e.button.button == SDL_BUTTON_LEFT){
                         left_hold = true;
-                }
-                break;
+                    }
+                    */
+                    break;
 
-            case SDL_MOUSEBUTTONUP:
-                if(left_hold) left_hold = false;
-                break;
+                case SDL_MOUSEBUTTONUP:
+                    if(left_hold) left_hold = false;
+                    break;
 
-            case SDL_MOUSEMOTION:
-                break;
+                case SDL_MOUSEMOTION:
+                    break;
             }
         }
 
         //conclution: euh voila on imprime tout ici
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-
-        for(element p = tete; p!=NULL; p = p->next){
+        
+        //puts("on commence les conneries");
+        
+        puts("nique la segmentation >:o ");
+        for(p = tete; p!=NULL; p = p->next){
+            if(p==NULL){
+                puts("et non haha");
+                break;
+            }
+            printf("%p->%p ", p, p->next);
             SDL_RenderDrawRect(rend, &p->rectangle);
-            SDL_RenderDrawLine(rend,
+            puts("le drame");
+            //if(p->next != NULL)
+            /*SDL_RenderDrawLine(rend,
                                p->rectangle.x+p->rectangle.w, // x1
                                p->rectangle.y+(1/2)*p->rectangle.h, //y1
                                p->queue.x, p->queue.y); // x2, y2
-        }   
-    }    
-
+        */
+        }
+        puts("c bon XD XD");
+        SDL_Delay(15);
         SDL_RenderDrawRect(rend, &start_bout);
         SDL_RenderPresent(rend);
+    }    
     return 0;
 }
 
