@@ -1,32 +1,38 @@
-#include <SDL_ttf.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <SDL.h>
+
 typedef struct list{
     int val ;
     struct list *next ; 
 }* list ;
-void creatrec(SDL_Renderer *ren,int x,int taille){
+
+void creatrec(SDL_Renderer *ren, int x, int taille){
     SDL_Rect recta;
     recta.x=(800/taille)*x;
-    recta.y=5;
+    recta.y=20;
     recta.w=(800/taille)-50;
-    recta.h=300;
-    SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
-    SDL_RenderDrawLine(ren,(800/taille)-50,300,(800/taille),300);
+    recta.h=100;
+    SDL_RenderDrawLine(ren,((800/taille)-50)*x,75,(800/taille)*x,75);
     SDL_RenderFillRect(ren,&recta);
 }
+
 int main(int arc, char** argv){
     int a;
     int f;
     SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window *windo=NULL;
+    SDL_Window  *windo=NULL;
     SDL_Renderer *rend=NULL;
     
-   
     
     printf("taille ya wld");
     scanf("%d",&a);
+
+	windo = SDL_CreateWindow("ta3i",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600,0);
+    rend  = SDL_CreateRenderer(windo,-1,SDL_RENDERER_SOFTWARE);
+    
+    SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+
     f=a;
     while (f!=0)
     {
@@ -34,9 +40,7 @@ int main(int arc, char** argv){
         f--;
         
     };
-     
-	windo=SDL_CreateWindow("ta3i",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600,0); 
-    rend=SDL_CreateRenderer(windo,-1,SDL_RENDERER_SOFTWARE);
+    
     /*SDL_RenderDrawPoint(rend,100,450);*/
     /*
     
@@ -57,10 +61,10 @@ int main(int arc, char** argv){
     rec.x=(800-rec.w)/2;
     rec.y=(600-rec.h)/2;
     SDL_RenderCopy(rend,text,NULL,&rec);
+    
     */
-
     SDL_RenderPresent(rend);
-    SDL_Delay(6000);
+    SDL_Delay(8000);
     SDL_DestroyWindow(windo);
     SDL_Quit();
     return EXIT_SUCCESS;
