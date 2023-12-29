@@ -10,10 +10,11 @@ typedef struct list{
 void creatrec(SDL_Renderer *ren, int x, int taille){
     SDL_Rect recta;
     recta.x=(800/taille)*x;
-    recta.y=20;
+    recta.y=200;
     recta.w=(800/taille)-50;
     recta.h=100;
-    SDL_RenderDrawLine(ren,((800/taille)-50)*x,75,(800/taille)*x,75);
+    if(x!=taille){
+    SDL_RenderDrawLine(ren,((800/taille)-50)*x,250,(800/taille)*x,250);}
     SDL_RenderFillRect(ren,&recta);
 }
 
