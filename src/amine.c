@@ -1,4 +1,5 @@
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_render.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -77,7 +78,8 @@ int main(int arc, char** argv){
             }
         }
     }
-
+    
+    SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(windo);
     SDL_Quit();
     return EXIT_SUCCESS;
