@@ -32,23 +32,7 @@ typedef struct {int w,h;} dim;
 
 typedef struct elem {
     SDL_Rect rectangle;
-    pos queue; // les cordonnées de la tete c'est ( x+w, y+(1/2)h) donc pas besoins de les stocker tu vois
     int val;
     struct elem* next;
 }* element;
 
-// on devrait ajouter un truc teh ttf ou chepaquoi ici on vera apres.
-/* la queue de cheval? XD XD
- * serieusement la queue be like:
- * > elem.line.queue.x = elem->next.rectangle.x (en gros euh)
- * > elem.line.queue.y = (elem->next.rectagle.y + elem->next.rectangle.h) / 2
- * > ET si elem->next == NULL, la queue elle reçoit la tete. ou bien ba rien mais ça prend de l'espace a la fin grrr (énervé)
- * > la tete elle est constante elle est pas variable c'est pas la peine de la stocker
- * 
- * le truc c'est que ça dessinne des lignes droite pas des lignes courbé là grrrrr (different de grrr).
- * mais de toute façon y a pas besoins de as t'es bete ou quoi?(ToT).
- * mais au cas ou c'est SDL2_GFX  .L. 
- *                                  o m
- *           (je voulais)            //
- *       (dessiner une main)
- */

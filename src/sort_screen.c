@@ -2,8 +2,6 @@
 #define __SORT_SCREEN__
 
 #include "def.h"
-#include <SDL2/SDL_timer.h>
-#include <stdio.h>
 
 extern window   wind;
 extern renderer rend;
@@ -26,24 +24,27 @@ int main_Loop(){
     tete = (element)malloc(sizeof(element));
     tete->next = (element)malloc(sizeof(element));
     tete->next->next = NULL;
-    element p;
+    element p = tete;
     int i = 0;
 
     // les coordinations constante avant la boucle
 
-    for( p = tete; p!=NULL; p = p->next){
+    while( p!= NULL){
         init_rect( &p->rectangle, 50 + 150*i, 50, 100, 50);
-    printf("%p\n",p);
+        printf("%d, %d, %d, %d\n",p->rectangle.x, p->rectangle.y, p->rectangle.h, p->rectangle.w);
+        
         if(p->next != NULL){
             p->queue.x = 50 + 150*(i+1);
             p->queue.y = 75;
         }
-
+        p = p->next;
+        i++;
     }    
 
     puts("c bon la queue et les positions teh les rectangles");
 
     while(loop){
+        p = tete;
         SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
         SDL_RenderClear(rend);
 
@@ -91,27 +92,10 @@ int main_Loop(){
         }
 
         //conclution: euh voila on imprime tout ici
+
+        SDL_RenderDrawRect(rend, &p->rectangle);
+
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-        
-        //puts("on commence les conneries");
-        
-        puts("nique la segmentation >:o ");
-        for(p = tete; p!=NULL; p = p->next){
-            if(p==NULL){
-                puts("et non haha");
-                break;
-            }
-            printf("%p->%p ", p, p->next);
-            SDL_RenderDrawRect(rend, &p->rectangle);
-            puts("le drame");
-            //if(p->next != NULL)
-            /*SDL_RenderDrawLine(rend,
-                               p->rectangle.x+p->rectangle.w, // x1
-                               p->rectangle.y+(1/2)*p->rectangle.h, //y1
-                               p->queue.x, p->queue.y); // x2, y2
-        */
-        }
-        puts("c bon XD XD");
         SDL_Delay(15);
         SDL_RenderDrawRect(rend, &start_bout);
         SDL_RenderPresent(rend);
