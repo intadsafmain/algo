@@ -10,7 +10,7 @@ typedef struct list{
 void creatrec(SDL_Renderer *ren, int x, int taille){
     SDL_Rect recta;
     int r,i;
-    r=(800/taille);
+    r=(1200/taille);
     i=(50/taille);
     recta.x=(r*x)+i;
     recta.y=200;
@@ -32,7 +32,7 @@ int main(int arc, char** argv){
     printf("taille ya wld");
     scanf("%d",&a);
 
-	windo = SDL_CreateWindow("ta3i",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,800,600,0);
+	windo = SDL_CreateWindow("ta3i",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,1200,600,0);
     rend  = SDL_CreateRenderer(windo,-1,SDL_RENDERER_SOFTWARE);
     
     SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
