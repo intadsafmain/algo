@@ -7,9 +7,6 @@ typedef struct Node
     int data;
     struct Node *p_nxt;
 }Node;
- 
- 
- 
 Node *lList_insert(Node *lList, int value)
 {
     Node *p_new = malloc(sizeof *p_new);
@@ -41,8 +38,6 @@ Node *lList_insert(Node *lList, int value)
     }
     return lList;
 }
- 
- 
 void lList_show(Node *lList)
 {
     while (lList != NULL)
@@ -52,8 +47,7 @@ void lList_show(Node *lList)
     }
     printf("\n");
 }
- 
- 
+
 void lList_free(Node **lList)
 {
     while (*lList != NULL)
@@ -64,22 +58,24 @@ void lList_free(Node **lList)
     }
 }
  
- 
- 
-int main(void)
+int main()
 {
     Node *lList = NULL;
-    int tab[] = {2, 3, 2, 1, 0, 9, 8, 7, 6, 5, -3, -5};
- 
-    size_t i;
-    for (i = 0; i < sizeof tab / sizeof tab[0]; i++)
-    {
-        lList = lList_insert(lList, tab[i]);
+    int x;
+    int t;
+    
+        do{
+        scanf("%d",&x);
+        lList = lList_insert(lList, x);
         lList_show(lList);
-    }
-     
-   
- 
+            
+        printf ("u  want more ? 1 for yes 2 for no");
+
+        scanf("%d",&t);
+        } while (t==1);
+        
+       
+    
     lList_free(&lList);
  
     return 0;
