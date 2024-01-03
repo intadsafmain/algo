@@ -11,7 +11,7 @@ void creatrec(SDL_Renderer *ren, int x, int taille){
     SDL_Rect recta;
     int r,i;
     r=(1200/taille);
-    i=(50/taille);
+    i=(50/(taille-1));
     recta.x=(r*x)+i;
     recta.y=200;
     recta.w=r-(r/3);
@@ -45,28 +45,7 @@ int main(int arc, char** argv){
         
     };
     
-    /*SDL_RenderDrawPoint(rend,100,450);*/
-    /*
-    
-    SDL_SetRenderDrawColor(rend,112,15,15,SDL_ALPHA_OPAQUE);SDL_RenderDrawLine(rend,50,50,500,500);
-    SDL_Rect recta;
-    recta.x=1100;
-    recta.y=570;
-    recta.w=80;
-    recta.h=20;
-     SDL_RenderFillRect(rend,&recta);
-    SDL_Surface *image=NULL;
-    SDL_Texture *text=NULL;
-    image =SDL_LoadBMP("src/start.bmp");
-    text= SDL_CreateTextureFromSurface(ren,image);
-    SDL_FreeSurface(image);
-    SDL_Rect rec;
-    SDL_QueryTexture(text,NULL,NULL,&rec.w,&rec.h);
-    rec.x=(800-rec.w)/2;
-    rec.y=(600-rec.h)/2;
-    SDL_RenderCopy(rend,text,NULL,&rec);
-    
-    */
+  
     SDL_RenderPresent(rend);
     SDL_Delay(9000);
     SDL_DestroyWindow(windo);
