@@ -2,6 +2,7 @@
 #define __SORT_SCREEN__
 
 #include "liste_fun.h"
+#include <SDL2/SDL_render.h>
 #include <time.h>
 
 
@@ -17,38 +18,44 @@ int main_Loop(){
     element tete = NULL;
     element queue = NULL;
     
-    bool tri = false;
+    bool tri = false, plus = false;
 
     INIT_ELEMENT(&tete);
-    (tete != NULL) ? puts("less go (nsm)"): puts("azy putain");
 
     queue = tete;
-    printf("%p %p", queue, &queue);
-    puts("j'ai fait ça pour me sauver il a dit");
-    PUSH(&queue);
-    PUSH(&queue);
-    PUSH(&queue);
-    puts("less go");
-    int nbre_elems = 3;
 
     SDL_Rect boutons[3];
 
     init_rect(&boutons[PLUS],   50, 450, 100, 100);
     init_rect(&boutons[MOINS], 200, 450, 100, 100);
-    init_rect(&boutons[START], 450, 450, 200, 100);
-    puts("azy");
+    init_rect(&boutons[START], 550, 450, 200, 100);
+
+    PUSH(&queue);
+    PUSH(&queue);
+    int nbre_elems = 3;
 
 init_rectangles:
+    if(plus){
+        PUSH(&queue)
+    }
+    else{
+
+    }
+    printf("%d\n", nbre_elems);
     init_rect_liste(tete, 0, nbre_elems);
     
-    puts("aya nikmok");
     while(loop){
-        puts("a");
+
+        SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
         SDL_RenderClear(rend);
+        
+        SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
         
         for(int i=0; i<3; i++){
             SDL_RenderDrawRect(rend,&boutons[i]);
         }
+        
+        draw_list(tete);
 
         if(SDL_WaitEvent(&e)){
             switch (e.type){
@@ -62,6 +69,7 @@ init_rectangles:
                         CLIQUE_COMP(PLUS){
                             if(nbre_elems < 10){
                                 nbre_elems++;
+                                plus = true;
                                 goto init_rectangles;
                             }
                         }
@@ -69,6 +77,7 @@ init_rectangles:
                         CLIQUE_COMP(MOINS){
                             if(nbre_elems > 3){
                                 nbre_elems--;
+                                plus = false;
                                 goto init_rectangles;
                             }
                         }
@@ -99,14 +108,14 @@ void init_rect(SDL_Rect* rect, int x, int y, int w, int h){
 }
 
 void init_rect_liste (element tete, int index, int number_of_elements){
-    int rectw = 700/number_of_elements,
-        rectd = 50/(number_of_elements-1);
+    int rectw = 700/(number_of_elements*2),
+        rectd = 50/((number_of_elements-1)*2);
     init_rect(&tete->rectangle,
-              (rectw * index) + rectd + 50,
+              rectw * index + ((index == 0) ? 0 : rectd)+50,
               100, rectw, rectw);
 
     // passage a l'element suivant
-    if(tete != NULL) init_rect_liste( tete->next, index+1, number_of_elements);
+    if(tete->next != NULL) init_rect_liste( tete->next, index+1, number_of_elements);
 }
 
 

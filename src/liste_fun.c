@@ -12,7 +12,6 @@ int generate(void){
 
 int init_elem(element* tete){
     *tete = (element)malloc(sizeof(struct elem));
-    puts((*tete == NULL) ? "nikmok" : "yes");
 
     (*tete)->next = NULL;
     (*tete)->val = generate();
@@ -23,14 +22,10 @@ int init_elem(element* tete){
 int push(element* queue){
     element nouv = NULL;
 
-    printf("a");
     INIT_ELEMENT(&nouv);
     
-    printf("%p", nouv);
-
     (*queue) ->next  = nouv;
     nouv     ->next  = NULL;
-    puts("la segmentaionnnnnnnnnnn");
     *queue = nouv;
     return (queue != NULL);
 }
@@ -52,6 +47,8 @@ int draw_list(element tete){
         draw_list(tete->next);
         
         int y = tete->rectangle.y+tete->rectangle.h/2;
+        
+        if(tete->next != NULL)
         SDL_RenderDrawLine(rend,
                            tete->rectangle.x+tete->rectangle.w, y,
                            tete->next->rectangle.x, y);
