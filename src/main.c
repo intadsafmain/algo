@@ -1,5 +1,4 @@
-#include "def.h"
-
+#include "sort_screen.h"
 
 window wind;
 renderer rend;
@@ -23,6 +22,7 @@ int main(int argc, char** argv){
         goto quit;
     }   
 
+    puts("nayez crainte tout va bien!");
     return_v = main_Loop();
 
     // fin du program on rembale
