@@ -1,61 +1,81 @@
 #ifndef __SORT_SCREEN__
 #define __SORT_SCREEN__
 
-#include "liste_fun.h"
+#include "insert_sort.h"
 #include <SDL2/SDL_render.h>
-#include <time.h>
-
 
 extern window   wind;
 extern renderer rend;
+extern TTF_Font* roboto;
+
+extern SDL_Color White;
+extern SDL_Color Black;
+
 bool loop = true;
 
-void init_rect(SDL_Rect* rect, int x, int y, int w, int h);
-void init_rect_liste (element tete, int index, int number_of_elements);
+void init_rect          (SDL_Rect* rect, int x, int y, int w, int h);
+void init_rect_liste    (element tete, int index, int number_of_elements);
+void rendDrawColor      (renderer rend, SDL_Color color);
 
-int main_Loop(){
+int main_Loop(void){
     SDL_Event e;
     element tete = NULL;
     element queue = NULL;
+    SDL_Surface* element_val = NULL;
     
-    bool tri = false, plus = false;
+    bool tri = false, plus = true;
 
     INIT_ELEMENT(&tete);
 
     queue = tete;
 
-    SDL_Rect boutons[3];
+    
+    bouton boutons[3];
 
-    init_rect(&boutons[PLUS],   50, 450, 100, 100);
-    init_rect(&boutons[MOINS], 200, 450, 100, 100);
-    init_rect(&boutons[START], 550, 450, 200, 100);
+    boutons [PLUS].S = SDL_LoadBMP("plus.bmp" );
+    boutons[MOINS].S = SDL_LoadBMP("moins.bmp");
+    boutons[START].S = SDL_LoadBMP("start.bmp");
 
-    PUSH(&queue);
-    PUSH(&queue);
-    int nbre_elems = 3;
+    init_rect(&boutons  [PLUS].R,  50, 450, 100, 100);
+    init_rect(&boutons [MOINS].R, 200, 450, 100, 100);
+    init_rect(&boutons [START].R, 550, 450, 200, 100);
+
+    for(int i = 0; i<3; i++){
+        boutons[i].T = SDL_CreateTextureFromSurface(rend, boutons[i].S);
+        SDL_QueryTexture(boutons[i].T, NULL, NULL, &boutons[i].R.w, &boutons[i].R.h);
+    }
+
+
+    PUSH(&queue)
+    PUSH(&queue)
+    PUSH(&queue)
+    int nbre_elems = 5;
 
 init_rectangles:
     if(plus){
         PUSH(&queue)
     }
     else{
-
+        pull(tete, &queue);
     }
-    printf("%d\n", nbre_elems);
+
     init_rect_liste(tete, 0, nbre_elems);
     
+    
+//euheuh
     while(loop){
 
-        SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+        rendDrawColor(rend, White);
         SDL_RenderClear(rend);
         
-        SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-        
+        rendDrawColor(rend, Black);
+
         for(int i=0; i<3; i++){
-            SDL_RenderDrawRect(rend,&boutons[i]);
+            SDL_RenderCopy(rend, boutons[i].T, NULL, &boutons[i].R);
         }
-        
-        draw_list(tete);
+        draw_list(&tete);
+
+        SDL_RenderPresent(rend);
 
         if(SDL_WaitEvent(&e)){
             switch (e.type){
@@ -67,7 +87,7 @@ init_rectangles:
                 case SDL_MOUSEBUTTONUP:
                     if( e.button.button == SDL_BUTTON_LEFT ){
                         CLIQUE_COMP(PLUS){
-                            if(nbre_elems < 10){
+                            if(nbre_elems < LIMITE_MAX){
                                 nbre_elems++;
                                 plus = true;
                                 goto init_rectangles;
@@ -75,7 +95,7 @@ init_rectangles:
                         }
                         else
                         CLIQUE_COMP(MOINS){
-                            if(nbre_elems > 3){
+                            if(nbre_elems > LIMITE_MIN){
                                 nbre_elems--;
                                 plus = false;
                                 goto init_rectangles;
@@ -90,7 +110,15 @@ init_rectangles:
                 break;
             }
         }
+    }
+    
+    while(tri){
+        rendDrawColor(rend, White);
+        SDL_RenderClear(rend);
 
+        rendDrawColor(rend, Black);
+        
+        draw_list(&tete);
         SDL_RenderPresent(rend);
     }
 
@@ -100,6 +128,7 @@ init_rectangles:
 
 //-------------------------
 
+
 void init_rect(SDL_Rect* rect, int x, int y, int w, int h){
     (*rect).x = x;
     (*rect).y = y;
@@ -108,15 +137,20 @@ void init_rect(SDL_Rect* rect, int x, int y, int w, int h){
 }
 
 void init_rect_liste (element tete, int index, int number_of_elements){
-    int rectw = 700/(number_of_elements*2),
-        rectd = 50/((number_of_elements-1)*2);
+    int rectd = 100/((number_of_elements-1)),
+        rectw = (700/number_of_elements) - rectd;
+
     init_rect(&tete->rectangle,
-              rectw * index + ((index == 0) ? 0 : rectd)+50,
-              100, rectw, rectw);
+              (rectw + rectd) * index + 50,
+              300-(rectw/2), rectw, rectw);
 
     // passage a l'element suivant
-    if(tete->next != NULL) init_rect_liste( tete->next, index+1, number_of_elements);
+    if(tete->next != NULL) init_rect_liste( tete->next, index+1,
+                                           number_of_elements);
 }
 
+void rendDrawColor(renderer rend, SDL_Color color){
+    SDL_SetRenderDrawColor(rend, color.r, color.g, color.b, color.a);
+}
 
 #endif

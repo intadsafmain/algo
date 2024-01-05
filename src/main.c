@@ -2,15 +2,26 @@
 
 window wind;
 renderer rend;
+TTF_Font* roboto = NULL;
 
 int main(int argc, char** argv){
     int return_v = EXIT_SUCCESS;
+
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
+    
+    TTF_Init();
+
     //  _ -
     // (OUo)
     //   o
 
-    if ( (wind = CREATE_WIN("window >:O")) == NULL){
+    if( (roboto = TTF_OpenFont("bin/Roboto-Regular.ttf", 500))==NULL ) {
+        puts(TTF_GetError());
+        goto quit;
+    }
+
+    if ( (wind = CREATE_WIN("PROJECT ALGO 3")) == NULL){
         printf("ereur creation fenetre: %s", SDL_GetError());
         goto quit;
     }
@@ -22,13 +33,13 @@ int main(int argc, char** argv){
         goto quit;
     }   
 
-    puts("nayez crainte tout va bien!");
     return_v = main_Loop();
 
     // fin du program on rembale
     SDL_DestroyWindow(wind);
     SDL_DestroyRenderer(rend);
 quit:
+    TTF_Quit();
     SDL_Quit();
     return return_v;
 }
