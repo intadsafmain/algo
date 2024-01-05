@@ -3,6 +3,8 @@
 
 #include "insert_sort.h"
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_timer.h>
+#include <stdio.h>
 
 extern window   wind;
 extern renderer rend;
@@ -15,7 +17,6 @@ bool loop = true;
 
 void init_rect          (SDL_Rect* rect, int x, int y, int w, int h);
 void init_rect_liste    (element tete, int index, int number_of_elements);
-void rendDrawColor      (renderer rend, SDL_Color color);
 
 int main_Loop(void){
     SDL_Event e;
@@ -112,14 +113,34 @@ init_rectangles:
         }
     }
     
+    for(int i = 0 ; i<3; i++){
+        SDL_DestroyTexture(boutons[i].T);
+    }
+    puts("la ça va");
+    element current = tete->next;
+    //printf("\n%p\n", current);
+
     while(tri){
+        puts("aaaa");
         rendDrawColor(rend, White);
         SDL_RenderClear(rend);
 
-        rendDrawColor(rend, Black);
+        insert_sort(current, tete);
+        current = current->next;
+
+        while(SDL_PollEvent(&e)){
+            switch (e.type){
+                case SDL_QUIT:
+                    tri = false;
+                    break;
+            }
+        }
         
+        rendDrawColor(rend, Black);
         draw_list(&tete);
         SDL_RenderPresent(rend);
+        if (current == NULL) tri = false;
+        SDL_Delay(1000);
     }
 
     free_list(tete);
@@ -149,8 +170,5 @@ void init_rect_liste (element tete, int index, int number_of_elements){
                                            number_of_elements);
 }
 
-void rendDrawColor(renderer rend, SDL_Color color){
-    SDL_SetRenderDrawColor(rend, color.r, color.g, color.b, color.a);
-}
 
 #endif

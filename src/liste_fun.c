@@ -105,4 +105,8 @@ int free_list(element tete){
     return 0;
 }
 
+void rendDrawColor(renderer rend, SDL_Color color){
+    SDL_SetRenderDrawColor(rend, color.r, color.g, color.b, color.a);
+}
+
 #endif
