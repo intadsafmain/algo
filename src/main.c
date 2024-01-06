@@ -9,8 +9,6 @@ int main(int argc, char** argv){
 
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
-    
-    TTF_Init();
 
     //  _ -
     // (OUo)

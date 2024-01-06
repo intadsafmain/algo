@@ -1,37 +1,67 @@
 #ifndef __INSERT_SORT__
 #define __INSERT_SORT__
+
 #include "liste_fun.h"
 
-extern renderer rend;
-extern SDL_Color Black;
-extern SDL_Color White;
-SDL_Color Red   = {255, 0, 0, 255};
-SDL_Color Green = {0, 255, 0, 255};
+extern  renderer rend;
+extern  SDL_Color Black;
+extern  SDL_Color White;
+        SDL_Color Red    = {255, 20, 20, 255};
+        SDL_Color Green  = {20, 255, 20, 255};
+        SDL_Color Purple = {255, 0, 255, 255};
 
-int insert_sort(element current, element tete){
-    puts("a");
-    if(tete->next != current){
-        if(insert_sort(current, tete->next) == 1){
-            current->next = tete->next;
-            tete->next = current;
-        }
-
+int insert_sort(element* current, element* tete){
+    
+    rendDrawColor(rend, Purple);
+    SDL_RenderFillRect(rend, &CURRENT->rectangle);
+    element pp = TETE, pg = TETE, temp = TETE;
+    
+    while(temp->next != CURRENT){
+        temp = temp->next;
     }
-    else{
-        if(tete->val > current->val){
-            rendDrawColor(rend, Red);
-            SDL_RenderFillRect( rend,    &(tete->rectangle));
-            SDL_RenderFillRect( rend, &(current->rectangle));
-            tete->next = current->next;
+    while(pg->val < CURRENT->val && pg != CURRENT){
+        rendDrawColor(rend, Green);
+        SDL_RenderFillRect(rend, &pg->rectangle);
+        pg   = pg -> next;
+    }
+
+    if(pg == TETE){
+        if(pg->val < CURRENT->val) return 0;
+
+        TETE = CURRENT;
+        puts("wael");
+        if(pg->next == CURRENT){
+            pg->next = CURRENT->next;
+            puts("midou");
+            CURRENT->next = pg;
+            puts("3000");
+            CURRENT = pg->next;
+            puts("zboy");
             return 1;
         }
         else{
-            rendDrawColor(rend, Green);
-            SDL_RenderFillRect( rend,    &(tete->rectangle));
-            SDL_RenderFillRect( rend, &(current->rectangle));
+            temp->next = CURRENT->next;
+            CURRENT->next = pg;
+            CURRENT = temp;
+            return 1;
         }
     }
-    return 0;
+    else if(pg == CURRENT){
+        return 0;
+    }
+
+    while(pp->next != pg){
+        pp   = pp -> next;
+    }
+
+    rendDrawColor(rend, Red);
+    SDL_RenderFillRect(rend, &pp->next->rectangle);
+
+    temp->next = CURRENT->next;
+    CURRENT->next = pg;
+    pp->next = CURRENT;
+    //CURRENT = temp;
+    return 1;
 }
 
 #endif

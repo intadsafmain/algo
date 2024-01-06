@@ -2,16 +2,13 @@
 #define __LISTE_FUNCTIONS__
 
 #include "def.h"
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_ttf.h>
-#include <stdio.h>
-#include <time.h>
 
 extern renderer rend;
 extern TTF_Font* roboto;
 
 SDL_Color Black = {0,0,0,0};
 SDL_Color White = {255,255,255,255};
+
 
 int generate(void){
     srand (rand()+time(NULL));
@@ -90,8 +87,8 @@ int draw_list(element* tete){
         
         if((*tete)->next != NULL)
         SDL_RenderDrawLine(rend,
-                           (*tete)->rectangle.x+(*tete)->rectangle.w, y,
-                           (*tete)->next->rectangle.x, y);
+                           (*tete)->rectangle.x+(*tete)->rectangle.w, Y(rectangle),
+                           (*tete)->next->rectangle.x, Y(next->rectangle) );
 
 
     }

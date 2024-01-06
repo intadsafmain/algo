@@ -11,15 +11,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <SDL2/SDL_ttf.h>
+#include <time.h>
 
 #define DEF_WIN_W 800 
 #define DEF_WIN_H 600
 
 #define CREATE_WIN(x) SDL_CreateWindow  ( x, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, DEF_WIN_W, DEF_WIN_H, SDL_WINDOW_SHOWN)
 #define CREATE_REND   SDL_CreateRenderer( wind, -1, SDL_RENDERER_SOFTWARE)
-
-#define BUTTON_W
-#define BUTTON_H
 
 #define pi 3.14159265359
 
@@ -34,6 +32,11 @@
 
 #define LIMITE_MAX 25
 #define LIMITE_MIN 5
+
+#define CURRENT  (*current)
+#define TETE     (*tete)
+
+#define Y(ouou) (*tete)-> ouou .y+(*tete)-> ouou .h/2
 
 typedef SDL_Window* window;
 typedef SDL_Renderer* renderer;

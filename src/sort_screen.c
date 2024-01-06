@@ -2,9 +2,6 @@
 #define __SORT_SCREEN__
 
 #include "insert_sort.h"
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_timer.h>
-#include <stdio.h>
 
 extern window   wind;
 extern renderer rend;
@@ -22,6 +19,7 @@ int main_Loop(void){
     SDL_Event e;
     element tete = NULL;
     element queue = NULL;
+
     SDL_Surface* element_val = NULL;
     
     bool tri = false, plus = true;
@@ -83,7 +81,6 @@ init_rectangles:
                 case SDL_QUIT:
                     loop = false;
                     break;
-
                 // euheuh
                 case SDL_MOUSEBUTTONUP:
                     if( e.button.button == SDL_BUTTON_LEFT ){
@@ -121,13 +118,19 @@ init_rectangles:
     //printf("\n%p\n", current);
 
     while(tri){
-        puts("aaaa");
         rendDrawColor(rend, White);
         SDL_RenderClear(rend);
 
-        insert_sort(current, tete);
-        current = current->next;
+        puts("ehehe");
+        printf("%p\n", tete);
+        printf("%p\n", current);
+        puts("ehehe");
 
+        insert_sort(&current, &tete);
+        
+        printf("\namine");
+        current = current->next;
+        printf("\n9arnouna\n%p\n%p",current, tete );
         while(SDL_PollEvent(&e)){
             switch (e.type){
                 case SDL_QUIT:
@@ -137,11 +140,14 @@ init_rectangles:
         }
         
         rendDrawColor(rend, Black);
+        init_rect_liste (tete, 0, nbre_elems);
         draw_list(&tete);
         SDL_RenderPresent(rend);
         if (current == NULL) tri = false;
-        SDL_Delay(1000);
+        puts("\nsalim");
+        SDL_Delay(15);
     }
+    SDL_WaitEvent(&e);
 
     free_list(tete);
     return EXIT_SUCCESS;
