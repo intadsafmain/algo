@@ -1,8 +1,9 @@
-#include <SDL2/SDL_render.h>
 #ifdef _WIN32
     #include <SDL.h>
+    #include <SDL_ttf.h>
 #else
     #include <SDL2/SDL.h>
+    #include <SDL2/SDL_ttf.h>
 #endif
 
 #include <stdio.h>
@@ -10,7 +11,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <SDL2/SDL_ttf.h>
 #include <time.h>
 
 #define DEF_WIN_W 800 
@@ -18,8 +18,6 @@
 
 #define CREATE_WIN(x) SDL_CreateWindow  ( x, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, DEF_WIN_W, DEF_WIN_H, SDL_WINDOW_SHOWN)
 #define CREATE_REND   SDL_CreateRenderer( wind, -1, SDL_RENDERER_SOFTWARE)
-
-#define pi 3.14159265359
 
 #define PLUS    0
 #define MOINS   1
@@ -40,9 +38,6 @@
 
 typedef SDL_Window* window;
 typedef SDL_Renderer* renderer;
-
-typedef struct {int x,y;} pos;
-typedef struct {int w,h;} dim;
 
 typedef struct elem {
     SDL_Rect rectangle;

@@ -27,7 +27,6 @@ int init_elem(element* tete){
     (*tete)->S = TTF_RenderText_Solid(roboto, s, Black);
     (*tete)->T = SDL_CreateTextureFromSurface(rend, (*tete)->S);
 
-    printf("%d\n",(*tete)->val);
     free(s);
 
     return (*tete) != NULL;

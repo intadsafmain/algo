@@ -41,7 +41,8 @@ int main_Loop(void){
 
     for(int i = 0; i<3; i++){
         boutons[i].T = SDL_CreateTextureFromSurface(rend, boutons[i].S);
-        SDL_QueryTexture(boutons[i].T, NULL, NULL, &boutons[i].R.w, &boutons[i].R.h);
+        SDL_QueryTexture(boutons[i].T, NULL, NULL,
+                         &boutons[i].R.w, &boutons[i].R.h);
     }
 
 
@@ -113,7 +114,6 @@ init_rectangles:
     for(int i = 0 ; i<3; i++){
         SDL_DestroyTexture(boutons[i].T);
     }
-    puts("la ça va");
     element current = tete->next;
     //printf("\n%p\n", current);
 
@@ -121,16 +121,10 @@ init_rectangles:
         rendDrawColor(rend, White);
         SDL_RenderClear(rend);
 
-        puts("ehehe");
-        printf("%p\n", tete);
-        printf("%p\n", current);
-        puts("ehehe");
 
         insert_sort(&current, &tete);
         
-        printf("\namine");
         current = current->next;
-        printf("\n9arnouna\n%p\n%p",current, tete );
         while(SDL_PollEvent(&e)){
             switch (e.type){
                 case SDL_QUIT:
@@ -144,10 +138,16 @@ init_rectangles:
         draw_list(&tete);
         SDL_RenderPresent(rend);
         if (current == NULL) tri = false;
-        puts("\nsalim");
-        SDL_Delay(15);
+        SDL_Delay(1000);
     }
-    SDL_WaitEvent(&e);
+    loop = true;
+    while(loop){
+        if(SDL_WaitEvent(&e)){
+            if(e.type == SDL_QUIT){
+                loop = false;
+            }
+        }
+    }
 
     free_list(tete);
     return EXIT_SUCCESS;

@@ -29,14 +29,10 @@ int insert_sort(element* current, element* tete){
         if(pg->val < CURRENT->val) return 0;
 
         TETE = CURRENT;
-        puts("wael");
         if(pg->next == CURRENT){
             pg->next = CURRENT->next;
-            puts("midou");
             CURRENT->next = pg;
-            puts("3000");
             CURRENT = pg->next;
-            puts("zboy");
             return 1;
         }
         else{
